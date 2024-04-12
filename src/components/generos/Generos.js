@@ -1,57 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { obtenerGeneros } from '../../services/DirectoresService'
 
+
+import Table from './Table'
+import Error from './Error'
+import Toggle from './Toggle'
+
 export default function Generos() {
+
+
+  const [generos, setGeneros] = useState([])
+  const [estado, setEstado] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     obtenerTodos()
-  }, [])
-
-  const [generos, setGeneros] = useState([])
+  }, [estado])
 
   const obtenerTodos = async () => {
     try {
-      const { data } = await obtenerGeneros()
+      const { data } = await obtenerGeneros(estado)
       setGeneros(data)
+      if(error) {
+        setError(false)
+      }
     } catch (e) {
       console.error(e)
+      setError(true)
     }
 
   }
 
+  const cambiarEstado = () => {
+    setEstado(!estado)
+  }
+
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Descripc.</th>
-          <th scope="col">Creado</th>
-          <th scope="col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          generos.map((genero, index) => {
-            return  (
-            <tr>
-            <th scope="row">{index+1}</th>
-              <td>{genero.nombre}</td>
-              <td>{genero.descripcion}</td>
-              <td>{genero.fechaCreacion}</td>
-              <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={genero.estado} />
-                  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-                </div>
-              </td>
-            </tr>
-          )
-          })
-        }
+    <>
+      <Toggle cambiarEstado={cambiarEstado} estado={estado}/>
+      {error ? <Error /> : <Table generos={generos} />}
+    </>
 
-      </tbody>
-    </table>
   )
 }

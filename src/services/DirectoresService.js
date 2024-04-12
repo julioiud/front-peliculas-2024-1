@@ -1,8 +1,8 @@
 import { axiosConfig } from "../configurations/axiosConfig"
 
 
-const obtenerGeneros = () => {
-    return axiosConfig.get('generos?estado=true', {
+const obtenerGeneros = (estado = true) => {
+    return axiosConfig.get('generos?estado='+estado, {
       headers: {
         'Content-Type' : 'application/json'
       }
