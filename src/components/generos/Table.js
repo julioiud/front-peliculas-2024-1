@@ -12,6 +12,7 @@ export default function Table({generos = []}) {
           <th scope="col">Descripc.</th>
           <th scope="col">Creado</th>
           <th scope="col">Estado</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>

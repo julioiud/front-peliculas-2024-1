@@ -11,6 +11,20 @@ export default function TrGenero({index, genero}) {
         <td>
         {genero.estado ? 'Activo' : 'Inactivo'}
         </td>
+        <td>
+            <button 
+                type="button" 
+                className="btn btn-outline-success"
+            >
+                Editar
+            </button>
+            <button 
+                type="button" 
+                className="btn btn-outline-danger"
+            >
+                Borrar
+            </button>
+        </td>
     </tr>
   )
 }
